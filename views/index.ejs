@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sistema Solar</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body class="h-[400hv] scrollbar scrollbar-thumb-rose-500">
+
+    <section class="wrapper">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+        <div id="title">
+            <span>EXPLORANDO O UNIVERSO</span>
+            <br>
+            <span>DESCUBRA OS SEGREDOS DO SISTEMA SOLAR</span>
+        </div>
+    </section>
+
+    <div class="contenedor">
+        <form id="form-planeta" class="form-grid" action="/obter-informacoes" method="GET">
+            <div class="caixa-de-selecao">
+                <div class="selecionar" id="selecionar">
+                    <div class="conteudo-selecionar">
+                        <h1 class="titulo">Escolha um planeta</h1>
+                        <p class="descricao">Do sistema solar</p>
+                    </div>
+                    <i class="fas fa-angle-down"></i>
+                </div>
+
+                <div class="opcoes" id="opcoes">
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/mercurio.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Mercúrio</h1>
+                                <p class="descricao">Mercúrio é o mais próximo do Sol.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/venus.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Vênus</h1>
+                                <p class="descricao">Vênus é o mais quente do Sistema Solar.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/terra.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Terra</h1>
+                                <p class="descricao">há presença confirmada de formas de vida.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/marte.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Marte</h1>
+                                <p class="descricao">Marte, conhecido como Planeta Vermelho.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/jupiter.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Júpiter</h1>
+                                <p class="descricao">Júpiter é conhecido por sua grande mancha vermelha.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/saturno.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Saturno</h1>
+                                <p class="descricao">Saturno é famoso por seus impressionantes anéis.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/urano.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Urano</h1>
+                                <p class="descricao">Tem uma órbita única inclinada.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opcao">
+                        <div class="conteudo-opcao">
+                            <img src="img/netuno.png" alt="">
+                            <div class="textos">
+                                <h1 class="titulo">Netuno</h1>
+                                <p class="descricao">Netuno é conhecido por sua coloração azul</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <input type="hidden" id="inputSelecionar" name="planeta">
+            <button type="submit" id="obter-informacoes" class="button-85">Obter Informações</button>
+
+        </form>
+    </div>
+
+    <!-- Aqui você pode exibir as informações do planeta selecionado após o envio do formulário -->
+    <% if (informacoesDoPlaneta) { %>
+        <div class="response">
+            <h2>Informações do Planeta</h2>
+            <p>Nome: <%= informacoesDoPlaneta.nome %>
+            </p>
+            <p>Atmosfera: <%= informacoesDoPlaneta.atmosfera %>
+            </p>
+            <p>Órbita: <%= informacoesDoPlaneta.orbita %>
+            </p>
+            <p>Temperatura: <%= informacoesDoPlaneta.temperatura %> °C</p>
+            <p>Gravidade: <%= informacoesDoPlaneta.gravidade %> m/s²</p>
+            <p>Raio: <%= informacoesDoPlaneta.raio %> km</p>
+            <p>Sobre o Planeta: <%= informacoesDoPlaneta.sobre %></p>
+            <!-- Adicione mais informações conforme necessário -->
+        </div>
+        <% } %>
+
+            <script>
+                document.getElementById("obter-informacoes").addEventListener("click", function () {
+                    const planetaSelecionado = document.querySelector('input[name="planeta"]').value;
+                    fetch(`/obter-informacoes?planeta=${planetaSelecionado}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Atualize a página com as informações recebidas
+                            // Exemplo: Exibir as informações em algum elemento HTML na página
+                            console.log(data); // Exemplo: log das informações no console
+                        })
+                        .catch(error => {
+                            console.error('Erro ao obter informações:', error);
+                        });
+                });
+                const selecionar = document.querySelector('#selecionar');
+                const opcoes = document.querySelector('#opcoes');
+                const conteudoSelecionar = document.querySelector('#selecionar .conteudo-selecionar');
+                const inputSelecionar = document.querySelector('#inputSelecionar');
+
+                document.querySelectorAll('#opcoes > .opcao').forEach((opcao) => {
+                    opcao.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        conteudoSelecionar.innerHTML = e.currentTarget.innerHTML;
+                        selecionar.classList.toggle('ativo');
+                        opcoes.classList.toggle('ativo');
+                        inputSelecionar.value = e.currentTarget.querySelector('.titulo').innerText;
+                    });
+                });
+
+                selecionar.addEventListener('click', () => {
+                    selecionar.classList.toggle('ativo');
+                    opcoes.classList.toggle('ativo');
+                });
+                
+            </script>
+</body>
+
+</html>
